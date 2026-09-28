@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MeoMeo - Discord</title>
 
     <style>
@@ -16,19 +17,23 @@
             font-family: Arial, sans-serif;
             background: #0d1117;
             color: white;
+
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             min-height: 100vh;
             padding: 20px;
             text-align: center;
+
             overflow-x: hidden;
         }
 
         /* =========================
            VIDEO INTRO
         ========================= */
+
         #video-container {
             width: 100%;
             max-width: 650px;
@@ -38,36 +43,48 @@
             display: block;
             width: 100%;
             max-height: 80vh;
+
             border-radius: 12px;
+
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+
             background: black;
         }
+
 
         /* =========================
            LỜI MỜI DISCORD
         ========================= */
+
         #invite-content {
             display: none;
+
             width: 100%;
             max-width: 650px;
+
             text-align: center;
+
             animation: fadeIn 0.8s ease-in-out;
         }
 
+        /* Chỉ hiện khi JS thêm class show */
         #invite-content.show {
             display: block !important;
         }
+
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
 
         h2 {
             margin-bottom: 12px;
@@ -80,18 +97,26 @@
             font-size: 16px;
         }
 
+
         /* =========================
-           NÚT DISCORD & BẬT ÂM THANH
+           NÚT DISCORD
         ========================= */
+
         .btn-join {
             display: inline-block;
+
             padding: 14px 32px;
+
             background-color: #5865F2;
             color: white;
+
             text-decoration: none;
+
             border-radius: 8px;
+
             font-weight: bold;
             font-size: 18px;
+
             transition: 0.2s;
         }
 
@@ -100,30 +125,44 @@
             transform: scale(1.03);
         }
 
+
+        /* =========================
+           NÚT ÂM THANH
+        ========================= */
+
         #sound-button {
             margin-top: 20px;
+
             padding: 12px 22px;
+
             border: none;
             border-radius: 8px;
+
             background: #5865F2;
             color: white;
+
             font-size: 16px;
             font-weight: bold;
+
             cursor: pointer;
         }
 
         #sound-button.hidden {
             display: none;
         }
+
     </style>
 </head>
+
 
 <body>
 
     <!-- =========================
          VIDEO INTRO
     ========================= -->
+
     <div id="video-container">
+
         <video
             id="myVideo"
             autoplay
@@ -131,37 +170,64 @@
             playsinline
             preload="auto"
         >
-            <!-- Thêm đường dẫn video .mp4 để chạy được trên Android/Windows -->
-            <source src="https://files.catbox.moe/v76lcl.mov" type="video/quicktime">
+
+            <!-- Cập nhật link video MP4 mới tương thích mọi trình duyệt -->
+            <source
+                src="https://files.catbox.moe/t571eq.mp4"
+                type="video/mp4"
+            >
+
             Trình duyệt của bạn không hỗ trợ video.
+
         </video>
 
+        <!-- Nút bật âm thanh -->
         <button id="sound-button">
             🔊 Bật âm thanh
         </button>
+
     </div>
+
 
     <!-- =========================
          LỜI MỜI DISCORD
     ========================= -->
+
     <div id="invite-content">
+
         <h2>🎉 Chào mừng bạn!</h2>
-        <p>Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.</p>
-        <a class="btn-join" href="https://discord.gg/qEWUJMUXrM" target="_blank">
+
+        <p>
+            Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.
+        </p>
+
+        <a
+            class="btn-join"
+            href="https://discord.gg/qEWUJMUXrM"
+            target="_blank"
+        >
             Gia nhập ngay
         </a>
+
     </div>
 
+
     <script>
+
         const video = document.getElementById("myVideo");
         const videoContainer = document.getElementById("video-container");
         const inviteContent = document.getElementById("invite-content");
         const soundButton = document.getElementById("sound-button");
 
-        // Hàm chuyển sang màn hình Discord
+
+        /* =========================
+           HÀM HIỂN THỊ DISCORD
+        ========================= */
+
         function showInvite() {
             videoContainer.style.display = "none";
             inviteContent.classList.add("show");
+
             setTimeout(function () {
                 inviteContent.scrollIntoView({
                     behavior: "smooth",
@@ -170,29 +236,47 @@
             }, 100);
         }
 
-        // Bật âm thanh
+
+        /* =========================
+           BẬT ÂM THANH
+        ========================= */
+
         soundButton.addEventListener("click", function () {
+
             video.muted = false;
             video.volume = 1;
             soundButton.classList.add("hidden");
-            video.play().catch(() => {});
+
+            video.play().catch(function (err) {
+                console.log("Lỗi phát âm thanh:", err);
+            });
+
         });
 
-        // Video phát xong -> Hiện Discord
-        video.addEventListener("ended", showInvite);
 
-        // Bảo vệ: Nếu video bị lỗi không tải được -> Tự động hiện khung Discord sau 3 giây
-        video.addEventListener("error", function () {
-            console.warn("Video bị lỗi không tải được, hiển thị nội dung Discord.");
+        /* =========================
+           SỰ KIỆN VIDEO
+        ========================= */
+
+        // 1. Xem hết video -> Chuyển sang khung Discord
+        video.addEventListener("ended", function () {
+            console.log("VIDEO ĐÃ XEM HẾT!");
             showInvite();
         });
 
-        // Tự động phát khi trang tải xong
-        window.addEventListener("DOMContentLoaded", function() {
-            video.play().catch(function() {
-                console.log("Trình duyệt chặn autoplay âm thanh.");
+        // 2. Bảo vệ: Nếu video bị lỗi mạng / không tải được -> Tự động hiện Discord ngay
+        video.addEventListener("error", function () {
+            console.warn("Video bị lỗi không tải được. Tự động hiển thị khung Discord.");
+            showInvite();
+        });
+
+        // 3. Tự động phát video ngay khi vào trang
+        window.addEventListener("DOMContentLoaded", function () {
+            video.play().catch(function () {
+                console.log("Trình duyệt hạn chế autoplay âm thanh.");
             });
         });
+
     </script>
 
 </body>
