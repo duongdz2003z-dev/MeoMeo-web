@@ -3,90 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gia nhập Discord!</title>
+    <title>Tham gia Server Discord</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #0f0f0f;
-            color: #ffffff;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        #intro-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 10;
-        }
-
-        #discord-card {
-            display: none;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
             text-align: center;
-            background: #18191c;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            max-width: 350px;
-            width: 85%;
-            z-index: 1;
+            background-color: #0d1117;
+            color: white;
         }
-
-        #discord-card h2 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #fff;
+        video {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
         }
-
-        #discord-card p {
-            color: #b9bbbe;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .btn-discord {
-            display: inline-block;
+        .btn-sound {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 15px 0;
             background-color: #5865F2;
             color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            text-decoration: none;
+            border: none;
+            border-radius: 5px;
             font-weight: bold;
-            font-size: 16px;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #248046;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <!-- Thay link video catbox của bạn vào src bên dưới -->
-    <video id="intro-video" autoplay muted playsinline>
+    <video id="myVideo" autoplay muted playsinline controls>
         <source src="https://files.catbox.moe/v76lcl.mov" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ thẻ video.
     </video>
 
-    <div id="discord-card">
+    <div>
+        <br>
+        <button id="soundBtn" class="btn-sound" onclick="toggleSound()">🔊 Bật âm thanh</button>
+
         <h2>Tham gia Server Discord!</h2>
         <p>Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.</p>
-        <!-- Thay link mời Discord vào href bên dưới -->
-        <a href="https://discord.gg/qEWUJMUXrM" class="btn-discord">Gia nhập ngay</a>
+        
+        <a href="https://discord.gg/qEWUJMUXrM">Gia nhập ngay</a>
     </div>
 
     <script>
-        const video = document.getElementById('intro-video');
-        const discordCard = document.getElementById('discord-card');
+        var video = document.getElementById("myVideo");
+        var btn = document.getElementById("soundBtn");
 
-        video.onended = function() {
-            video.style.display = 'none';
-            discordCard.style.display = 'block';
-        };
+        function toggleSound() {
+            if (video.muted) {
+                video.muted = false;
+                btn.innerText = "🔇 Tắt âm thanh";
+            } else {
+                video.muted = true;
+                btn.innerText = "🔊 Bật âm thanh";
+            }
+        }
+
+        // Tự động bật tiếng ngay khi người dùng chạm vào bất kỳ đâu trên màn hình
+        document.addEventListener('click', function() {
+            if (video.muted) {
+                video.muted = false;
+                btn.innerText = "🔇 Tắt âm thanh";
+            }
+        }, { once: true });
     </script>
+
 </body>
 </html>
-
-	
