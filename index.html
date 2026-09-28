@@ -5,79 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tham gia Server Discord</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+        body {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #0d1117;
-            color: white;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Khung video intro full màn hình lúc đầu */
+        #video-container {
+            width: 100%;
+            max-width: 650px;
+            display: block;
         }
         video {
             width: 100%;
-            max-width: 800px;
-            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        .btn-sound {
-            padding: 10px 20px;
+
+        /* Ẩn phần nội dung mời Discord đi lúc ban đầu */
+        #invite-content {
+            display: none; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+        p {
+            margin-bottom: 25px;
+            color: #8b949e;
             font-size: 16px;
-            cursor: pointer;
-            margin: 15px 0;
+        }
+        .btn-join {
+            display: inline-block;
+            padding: 14px 32px;
             background-color: #5865F2;
             color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #248046;
-            color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+        .btn-join:hover {
+            background-color: #4752C4;
         }
     </style>
 </head>
 <body>
 
-    <video id="myVideo" autoplay muted playsinline controls>
-        <source src="https://files.catbox.moe/v76lcl.mov" type="video/mp4">
-        Trình duyệt của bạn không hỗ trợ thẻ video.
-    </video>
+    <!-- Khung Video Intro -->
+    <div id="video-container">
+        <video id="myVideo" autoplay muted playsinline>
+            <source src="https://files.catbox.moe/v76lcl.mov" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ thẻ video.
+        </video>
+    </div>
 
-    <div>
-        <br>
-        <button id="soundBtn" class="btn-sound" onclick="toggleSound()">🔊 Bật âm thanh</button>
-
-        <h2>Tham gia Server Discord!</h2>
-        <p>Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.</p>
-        
-        <a href="https://discord.gg/qEWUJMUXrM">Gia nhập ngay</a>
+    <!-- Khung Lời mời Discord (Chỉ hiện sau khi hết video) -->
+    <div id="invite-content">
+        <h2>🎉 Chào mừng bạn!</h2>
+        <p>Bấm nút bên dưới để tham gia vào Server Discord nhé.</p>
+        <a class="btn-join" href="https://discord.gg/qEWUJMUXrM">Gia nhập ngay</a>
     </div>
 
     <script>
         var video = document.getElementById("myVideo");
-        var btn = document.getElementById("soundBtn");
+        var videoContainer = document.getElementById("video-container");
+        var inviteContent = document.getElementById("invite-content");
 
-        function toggleSound() {
-            if (video.muted) {
-                video.muted = false;
-                btn.innerText = "🔇 Tắt âm thanh";
-            } else {
-                video.muted = true;
-                btn.innerText = "🔊 Bật âm thanh";
-            }
-        }
-
-        // Tự động bật tiếng ngay khi người dùng chạm vào bất kỳ đâu trên màn hình
+        // Tự động bật tiếng ngay khi người dùng chạm bất kỳ đâu trên màn hình lúc intro đang chạy
         document.addEventListener('click', function() {
             if (video.muted) {
                 video.muted = false;
-                btn.innerText = "🔇 Tắt âm thanh";
             }
         }, { once: true });
+
+        // Sự kiện: Khi video phát xong -> Ẩn video và Hiện bảng lời mời
+        video.addEventListener('ended', function() {
+            videoContainer.style.display = 'none'; // Ẩn video
+            inviteContent.style.display = 'block';  // Hiện lời mời Discord
+        });
     </script>
 
 </body>
