@@ -23,7 +23,7 @@
             text-align: center;
         }
         
-        /* Khung video intro full màn hình lúc đầu */
+        /* Màn hình Video Intro ban đầu */
         #video-container {
             width: 100%;
             max-width: 650px;
@@ -35,19 +35,19 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
-        /* Ẩn phần nội dung mời Discord đi lúc ban đầu */
+        /* Khung lời mời Discord (ban đầu ẩn) */
         #invite-content {
             display: none; 
             animation: fadeIn 0.8s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 26px;
         }
         p {
@@ -81,10 +81,10 @@
         </video>
     </div>
 
-    <!-- Khung Lời mời Discord (Chỉ hiện sau khi hết video) -->
+    <!-- Khung Lời mời Discord (Hiện sau khi xem xong Video) -->
     <div id="invite-content">
         <h2>🎉 Chào mừng bạn!</h2>
-        <p>Bấm nút bên dưới để tham gia vào Server Discord nhé.</p>
+        <p>Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.</p>
         <a class="btn-join" href="https://discord.gg/qEWUJMUXrM">Gia nhập ngay</a>
     </div>
 
@@ -93,17 +93,17 @@
         var videoContainer = document.getElementById("video-container");
         var inviteContent = document.getElementById("invite-content");
 
-        // Tự động bật tiếng ngay khi người dùng chạm bất kỳ đâu trên màn hình lúc intro đang chạy
+        // Tự động bật tiếng ngay khi chạm/click vào màn hình
         document.addEventListener('click', function() {
             if (video.muted) {
                 video.muted = false;
             }
         }, { once: true });
 
-        // Sự kiện: Khi video phát xong -> Ẩn video và Hiện bảng lời mời
+        // Khi video chạy xong -> Ẩn video và hiện lời mời
         video.addEventListener('ended', function() {
-            videoContainer.style.display = 'none'; // Ẩn video
-            inviteContent.style.display = 'block';  // Hiện lời mời Discord
+            videoContainer.style.display = 'none';
+            inviteContent.style.display = 'block';
         });
     </script>
 
