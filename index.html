@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gia nhập Discord!</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #intro-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 10;
+        }
+
+        #discord-card {
+            display: none;
+            text-align: center;
+            background: #18191c;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            max-width: 350px;
+            width: 85%;
+            z-index: 1;
+        }
+
+        #discord-card h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        #discord-card p {
+            color: #b9bbbe;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .btn-discord {
+            display: inline-block;
+            background-color: #5865F2;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thay link video catbox của bạn vào src bên dưới -->
+    <video id="intro-video" autoplay muted playsinline>
+        <source src="https://files.catbox.moe/v76lcl.mov" type="video/mp4">
+    </video>
+
+    <div id="discord-card">
+        <h2>Tham gia Server Discord!</h2>
+        <p>Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.</p>
+        <!-- Thay link mời Discord vào href bên dưới -->
+        <a href="https://discord.gg/qEWUJMUXrM" class="btn-discord">Gia nhập ngay</a>
+    </div>
+
+    <script>
+        const video = document.getElementById('intro-video');
+        const discordCard = document.getElementById('discord-card');
+
+        video.onended = function() {
+            video.style.display = 'none';
+            discordCard.style.display = 'block';
+        };
+    </script>
+</body>
+</html>
+
+	
