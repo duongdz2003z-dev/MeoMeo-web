@@ -3,109 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tham gia Server Discord</title>
+
+    <title>MeoMeo - Discord</title>
+
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #0d1117;
-            color: #ffffff;
+            background: #0d1117;
+            color: white;
+
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             min-height: 100vh;
             padding: 20px;
             text-align: center;
-            overflow: hidden;
+
+            overflow-x: hidden;
         }
-        
-        /* Khung Video chiếm nổi bật màn hình ban đầu */
+
+        /* =========================
+           VIDEO INTRO
+        ========================= */
+
         #video-container {
             width: 100%;
             max-width: 650px;
-            display: block;
-        }
-        video {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
-        /* Ẩn hoàn toàn lời mời lúc đầu */
+        #myVideo {
+            display: block;
+            width: 100%;
+            max-height: 80vh;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 20px rgba(0,0,0,0.5);
+
+            background: black;
+        }
+
+
+        /* =========================
+           LỜI MỜI DISCORD
+        ========================= */
+
         #invite-content {
-            display: none; 
+            display: none !important;
+
+            width: 100%;
+            max-width: 650px;
+
+            text-align: center;
+
             animation: fadeIn 0.8s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Chỉ hiện khi JS thêm class show */
+        #invite-content.show {
+            display: block !important;
         }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
 
         h2 {
             margin-bottom: 12px;
             font-size: 28px;
         }
+
         p {
             margin-bottom: 25px;
             color: #8b949e;
             font-size: 16px;
         }
+
+
+        /* =========================
+           NÚT DISCORD
+        ========================= */
+
         .btn-join {
             display: inline-block;
+
             padding: 14px 32px;
+
             background-color: #5865F2;
             color: white;
+
             text-decoration: none;
+
             border-radius: 8px;
+
             font-weight: bold;
             font-size: 18px;
+
             transition: 0.2s;
         }
+
         .btn-join:hover {
             background-color: #4752C4;
+            transform: scale(1.03);
         }
+
+
+        /* =========================
+           NÚT ÂM THANH
+        ========================= */
+
+        #sound-button {
+            margin-top: 20px;
+
+            padding: 12px 22px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #5865F2;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        #sound-button.hidden {
+            display: none;
+        }
+
     </style>
 </head>
+
+
 <body>
 
-    <!-- BƯỚC 1: CHỈ HIỆN VIDEO INTRO -->
+    <!-- =========================
+         VIDEO INTRO
+    ========================= -->
+
     <div id="video-container">
-        <video id="myVideo" autoplay muted playsinline>
-            <source src="https://files.catbox.moe/v76lcl.mov" type="video/mp4">
-            Trình duyệt của bạn không hỗ trợ thẻ video.
+
+        <video
+            id="myVideo"
+            autoplay
+            muted
+            playsinline
+            preload="auto"
+        >
+
+            <source
+                src="https://files.catbox.moe/v76lcl.mov"
+                type="video/quicktime"
+            >
+
+            Trình duyệt của bạn không hỗ trợ video.
+
         </video>
+
+        <!-- Nút bật âm thanh -->
+        <button id="sound-button">
+            🔊 Bật âm thanh
+        </button>
+
     </div>
 
-    <!-- BƯỚC 2: ẨN LỜI MỜI (CHỈ HIỆN KHI XEM XONG VIDEO) -->
+
+    <!-- =========================
+         LỜI MỜI DISCORD
+         BAN ĐẦU BỊ ẨN HOÀN TOÀN
+    ========================= -->
+
     <div id="invite-content">
+
         <h2>🎉 Chào mừng bạn!</h2>
-        <p>Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.</p>
-        <a class="btn-join" href="https://discord.gg/qEWUJMUXrM">Gia nhập ngay</a>
+
+        <p>
+            Xem xong intro rồi! Bấm nút bên dưới để vào server nhé.
+        </p>
+
+        <a
+            class="btn-join"
+            href="https://discord.gg/qEWUJMUXrM"
+            target="_blank"
+        >
+            Gia nhập ngay
+        </a>
+
     </div>
+
 
     <script>
-        var video = document.getElementById("myVideo");
-        var videoContainer = document.getElementById("video-container");
-        var inviteContent = document.getElementById("invite-content");
 
-        // Tự động bật nhạc khi người dùng chạm vào màn hình trong lúc video đang chạy
-        document.addEventListener('click', function() {
-            if (video.muted) {
-                video.muted = false;
-            }
-        }, { once: true });
+        const video = document.getElementById("myVideo");
+        const videoContainer = document.getElementById("video-container");
+        const inviteContent = document.getElementById("invite-content");
+        const soundButton = document.getElementById("sound-button");
 
-        // Lắng nghe sự kiện: Video xem xong -> Ẩn video và Mới hiện lời mời
-        video.addEventListener('ended', function() {
-            videoContainer.style.display = 'none';  // Xóa video khỏi màn hình
-            inviteContent.style.display = 'block';  // Mới cho lời mời hiện lên
+
+        /* =========================
+           BẬT ÂM THANH
+        ========================= */
+
+        soundButton.addEventListener("click", function () {
+
+            video.muted = false;
+
+            video.volume = 1;
+
+            soundButton.classList.add("hidden");
+
+            video.play();
+
         });
+
+
+        /* =========================
+           VIDEO CHẠY HẾT
+        ========================= */
+
+        video.addEventListener("ended", function () {
+
+            console.log("VIDEO ĐÃ XEM HẾT!");
+
+            // Xóa video
+            videoContainer.style.display = "none";
+
+            // Hiện lời mời Discord
+            inviteContent.classList.add("show");
+
+            // Cuộn xuống lời mời
+            setTimeout(function () {
+
+                inviteContent.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+            }, 100);
+
+        });
+
+
+        /* =========================
+           NẾU VIDEO BỊ LOAD LẠI
+        ========================= */
+
+        video.addEventListener("loadedmetadata", function () {
+
+            console.log("Thời lượng video:", video.duration);
+
+        });
+
+
     </script>
 
 </body>
